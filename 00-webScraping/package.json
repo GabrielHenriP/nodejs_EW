@@ -4,6 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
+    "download-pdf": "^0.1.6",
     "puppeteer": "^5.5.0"
   }
 }
