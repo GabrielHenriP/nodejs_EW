@@ -16,9 +16,10 @@ let getLink = async () => {
 
 getLink()
   .then(pdfLink => {
-    console.log(pdfLink)
+    let arrayLink = pdfLink.split("/")
+    console.log(arrayLink[arrayLink.length - 1])
     let options = {
-      filename: "b.pdf"
+      filename: arrayLink[arrayLink.length - 1]
     }
 
     download(pdfLink, options, err => {
