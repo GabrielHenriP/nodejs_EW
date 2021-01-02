@@ -1,6 +1,7 @@
 const fs = require('fs');
 const pdf = require('pdf-parse');
 const ObjectsToCsv = require('objects-to-csv');
+const AdmZip = require('adm-zip');
  
 let dataBuffer = fs.readFileSync('Padrao_TISS_Componente_Organizacional__202012.pdf');
 
@@ -52,7 +53,10 @@ pdf(dataBuffer).then( data => {
             }
           
             return data
-        })  
+        })
+        .filter( object => {
+            return Object.keys(object).length !== 0
+        })
 
     indexsToSlice = [];
     arrayPhrases.forEach( (phrase, index) => {
@@ -72,14 +76,21 @@ pdf(dataBuffer).then( data => {
     const tables = [arrayTable_1, arrayTable_2, arrayTable_3]
     
     let  numberTable = 30
-    const tablesCsv = tables.map( table => {
+    tables.map( table => {
         (async () => {
 
             const csv = new ObjectsToCsv(table);
             await csv.toDisk(`./Teste_Intuitive_Care_Gabriel/Quadro_${numberTable}.csv`);
+            
+            
+            
 
           })();
           numberTable++;
     })
+
+    const zip = new AdmZip();
+    zip.addLocalFolder(__dirname+'/Teste_Intuitive_Care_Gabriel/')  
+    zip.writeZip(__dirname+'/Teste_Intuitive_Care_Gabriel.zip')
 
 })
