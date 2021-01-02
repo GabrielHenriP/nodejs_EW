@@ -4,6 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
+    "fresh-tabula-js": "^2.0.0",
     "pdf-parse": "^1.1.1",
     "pdf.js-extract": "^0.1.5"
   }
