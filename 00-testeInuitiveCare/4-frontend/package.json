@@ -1,0 +1,25 @@
+{
+  "name": "4-frontend",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "dev": "nodemon index.js",
+    "csv": "sucrase-node extractorCSV.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "csv-parser": "^3.0.0",
+    "csvtojson": "^2.0.10",
+    "encoding-japanese": "^1.0.30",
+    "express": "^4.17.1",
+    "iconv-lite": "^0.6.2",
+    "neat-csv": "^6.0.0",
+    "read-file-utf8": "^2.0.4",
+    "utf8": "^3.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.6",
+    "sucrase": "^3.17.0"
+  }
+}
