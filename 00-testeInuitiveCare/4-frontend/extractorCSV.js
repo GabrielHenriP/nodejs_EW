@@ -1,42 +1,26 @@
-import fs from 'fs';
-import csv from 'csv-parser';
-import utf8 from 'utf8';
-import encoding from 'encoding-japanese';
-import { Buffer } from 'buffer';
+const fs = require('fs');
 
+const fileBuffer = fs.readFileSync('Relatorio_cadop.csv', 'latin1');
 
-let fileBuffer = fs.readFileSync('Relatorio_cadop.csv');
-console.log(encoding.detect(fileBuffer))
-const vetorBuffer = Buffer.from(fileBuffer)
-console.log(vetorBuffer.slice(26,27))
+const boxText = fileBuffer.split('\n').map( bloco => bloco.split("\r").filter(Boolean))
+let text = boxText.map( text => text[0])
 
-/*
-const results = [];
-fs.createReadStream('Relatorio_cadop.csv',{ encoding: 'utf8', fd: null })
-.pipe(csv( { separator: ';' } ,["Registro ANS","CNPJ","Razão Social","Nome Fantasia","Modalidade","Logradouro","Número","Complemento","Bairro","Cidade","UF","CEP","DDD","Telefone","Fax","Endereço eletrônico","Representante","Cargo Representante","Data Registro ANS"] ))
-  .on('data', (data) => results.push(data))
-  .on('end', () => {
-    console.log(results)
-    
-  });*/
+const header = text[0].split(';').map(string => string.slice(1, string.length-1))
+console.log(header)
+const data = text.slice(1,text.length-1)//vetor de string
 
-/*fs.createReadStream('Relatorio_cadop.csv',{ encoding: 'utf8', fd: null }).on('data', function(chunk) { 
-    console.log(chunk)
-  });*/
-
- /* fs.readFile('Relatorio_cadop.csv', 'utf8', function (err, data) {
-    if (err) throw err;
-    console.log(data.toString());
-});*/
-
-/*
-try {
-  const data = fs.readFileSync('Relatorio_cadop.csv', 'utf8')
-  console.log(data)
-} catch (err) {
-  console.error(err)
-}*/
-
-
-
+const csvInObject = data.map( string => {
   
+  let temp = string.split(';').map(string => string.slice(1, string.length-1))
+  let obj = {}
+  for(let i=0; i< 19; i++){
+    //console.log(header[i])
+    obj[header[i]] = temp[i]
+  }
+  
+  return obj
+})
+
+console.log(csvInObject)
+
+module.exports = { csvInObject }
